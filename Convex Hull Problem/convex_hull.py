@@ -11,6 +11,7 @@
 ## all colinear, it will just return all points. Therefore it will let the line
 ## itslef be the convex hull.
 
+import matplotlib.pyplot as plt
 
 X_VAL = 0
 Y_VAL = 1
@@ -24,19 +25,23 @@ def get_points_of_convex_hull(points_in_plane):
     
     for i in range(0,n-1):
         pointI = points_in_plane[i]
-        
         for j in range(i+1, n):
             pointJ = points_in_plane[j]
             
             if line_is_border_of_hull(pointI, pointJ, points_in_plane):
-                    if pointI not in points_of_convex_hull:
-                        points_of_convex_hull.append(pointI)
-                    if pointJ not in points_of_convex_hull:
-                        points_of_convex_hull.append(pointJ)
+                prepare_line_for_plot(pointI, pointJ)
+                if pointI not in points_of_convex_hull:
+                    points_of_convex_hull.append(pointI)
+                if pointJ not in points_of_convex_hull:
+                    points_of_convex_hull.append(pointJ)
                         
     return points_of_convex_hull
 
 
+def prepare_line_for_plot(point1, point2):
+    plt.plot((point1[X_VAL], point2[X_VAL]), (point1[Y_VAL], point2[Y_VAL]), 'g-', lw=2)
+
+    
 def line_is_border_of_hull(point1, point2, points_in_plane):
     """Takes in 2 points (tuples), constructs a line between them, and determines if the given line makes up one of the borders of the convex hull.
        If every other point lies on that line, this will return true."""
@@ -102,14 +107,50 @@ def print_points_of_convex_hull(points_of_convex_hull):
         print("\t" + str(point))
 
 
+def prompt_for_valid_boolean(message):
+    while(True):
+        userResponse = input("\n" + message + " (y)es or (n)o: ")
+        if userResponse.lower().strip() in ("y", "n"):
+            userResponse = (userResponse == "y")
+            break
+        else:
+            print("Invlid input. Enter (y)es or (n)o")
+
+    return userResponse
+
+
+def display_convex_hull(all_points_in_plane, points_of_convex_hull):
+    x_vals = []
+    y_vals = []
+    
+    for point in (all_points_in_plane):
+        x_vals.append(point[X_VAL])
+        y_vals.append(point[Y_VAL])
+
+    plt.scatter(x_vals,y_vals)
+    plt.show()
+        
 
 def main():
     """Runs algorithm for the given set of points defined below. Prints the output."""
 
     ##Data set of points in plane. Change Accordingly.
     points_in_plane = [(100, 0), (-100,0), (100,100), (-100, 100), (20,30), (30,40), (-50,50)]
+
+    points_in_plane = [(1, 0), (1, 1), (1, -1), (0.68957, 0.283647), (0.909487, 0.644276), 
+ (0.0361877, 0.803816), (0.583004, 0.91555), (-0.748169, 0.210483), 
+ (-0.553528, -0.967036), (0.316709, -0.153861), (-0.79267, 0.585945),
+ (-0.700164, -0.750994), (0.452273, -0.604434), (-0.79134, -0.249902), 
+ (-0.594918, -0.397574), (-0.547371, -0.434041), (0.958132, -0.499614), 
+ (0.039941, 0.0990732), (-0.891471, -0.464943), (0.513187, -0.457062), 
+ (-0.930053, 0.60341), (0.656995, 0.854205)]
     
     points_of_convex_hull = get_points_of_convex_hull(points_in_plane)
     print_points_of_convex_hull(points_of_convex_hull)
+    show_graphic = prompt_for_valid_boolean("Would you like to see a graphic of the convex hull?")
+
+    if show_graphic:
+        display_convex_hull(points_in_plane, points_of_convex_hull)
+    
 
 main()
