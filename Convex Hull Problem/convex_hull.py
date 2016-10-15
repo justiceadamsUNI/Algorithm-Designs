@@ -13,7 +13,11 @@
 ## all colinear, it will just return all points. Therefore it will let the line
 ## itslef be the convex hull.
 
-import matplotlib.pyplot as plt
+MATPLOTLIB_INSTALLED = True
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    MATPLOTLIB_INSTALLED = False
 
 X_VAL = 0
 Y_VAL = 1
@@ -30,8 +34,9 @@ def get_points_of_convex_hull(points_in_plane):
         for j in range(i+1, n):
             pointJ = points_in_plane[j]
             
-            if line_is_border_of_hull(pointI, pointJ, points_in_plane): 
-                prepare_line_for_plot(pointI, pointJ)
+            if line_is_border_of_hull(pointI, pointJ, points_in_plane):
+                if MATPLOTLIB_INSTALLED:
+                    prepare_line_for_plot(pointI, pointJ)
                 if pointI not in points_of_convex_hull:
                     points_of_convex_hull.append(pointI)
                 if pointJ not in points_of_convex_hull:
@@ -146,11 +151,12 @@ def main():
 
     ##Data set of points in plane. Change Accordingly.
     points_in_plane = [(-2,5), (1,1), (2,15), (30,30), (10,10), (15, 15), (30,1), (20,3), (25,10), (29, 2)]
+    show_graphic = False
     
     points_of_convex_hull = get_points_of_convex_hull(points_in_plane)
     print_points_of_convex_hull(points_of_convex_hull)
-    show_graphic = prompt_for_valid_boolean("Would you like to see a graphic of the convex hull?")
-
+    if MATPLOTLIB_INSTALLED:
+        show_graphic = prompt_for_valid_boolean("Would you like to see a graphic of the convex hull?")
     if show_graphic:
         display_convex_hull(points_in_plane)
     
