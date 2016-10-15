@@ -19,8 +19,8 @@ X_VAL = 0
 Y_VAL = 1
 
 def get_points_of_convex_hull(points_in_plane):
-    """Takes in an array of tuples that represent a set of points in the XY plane, and returns an Array containing all points that make up the convex
-       hull."""
+    """Takes in an array of tuples that represent a set of points in the XY plane, and returns an Array containing all points that make up
+       the convex hull."""
     
     points_of_convex_hull = []
     n = len(points_in_plane)
@@ -47,8 +47,8 @@ def prepare_line_for_plot(point1, point2):
 
     
 def line_is_border_of_hull(point1, point2, points_in_plane):
-    """Takes in 2 points (tuples), constructs a line between them, and determines if the given line makes up one of the borders of the convex hull.
-       If every other point lies on that line, this will return true."""  
+    """Takes in 2 points (tuples), constructs a line between them, and determines if the given line makes up one of the borders of the
+       convex hull. If every other point lies on that line, this will return true."""
     
     line_equation = construct_line_between_points(point1, point2)
     first_points_position_relative_to_line = None
@@ -71,8 +71,8 @@ def line_is_border_of_hull(point1, point2, points_in_plane):
 
 
 def construct_line_between_points(point1,point2):
-    """Takes in 2 points (tuples) and returns a two variable function representing the line between those two points. Recognizes vertical lines and
-       returns according function. Each equation set = 0 represents all points on said line."""
+    """Takes in 2 points (tuples) and returns a two variable function representing the line between those two points. Recognizes vertical
+       lines and returns according function. Each equation set = 0 represents all points on said line."""
     
     point1_x = point1[X_VAL]
     point1_y = point1[Y_VAL]
@@ -90,8 +90,9 @@ def construct_line_between_points(point1,point2):
 
 
 def get_points_position_relative_to_line(point, line_equation):
-    """Takes in a 2 variable function representing the equation of a line and any point on the plane (Tuple), then determines that points location in
-       relation to the given line. To avoid floating point error we round each result to 9 digits. See preface instructions."""
+    """Takes in a 2 variable function representing the equation of a line and any point on the plane (Tuple), then determines that points
+       location in relation to the given line. To avoid floating point error we round each result to 9 digits. See preface
+       instructions."""
 
     f_at_x = round(line_equation(point[X_VAL], point[Y_VAL]), 10)
 
