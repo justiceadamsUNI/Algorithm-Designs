@@ -22,7 +22,7 @@ except ImportError:
 X_VAL = 0
 Y_VAL = 1
 
-def get_points_of_convex_hull(points_in_plane):
+def getPointsOfConvexHull(points_in_plane):
     """Takes in an array of tuples that represent a set of points in the XY plane, and returns an Array containing all points that make up
        the convex hull."""
     
@@ -34,9 +34,9 @@ def get_points_of_convex_hull(points_in_plane):
         for j in range(i+1, n):
             pointJ = points_in_plane[j]
             
-            if line_is_border_of_hull(pointI, pointJ, points_in_plane):
+            if lineIsBorderOfHull(pointI, pointJ, points_in_plane):
                 if MATPLOTLIB_INSTALLED:
-                    prepare_line_for_plot(pointI, pointJ)
+                    prepareLineForPlot(pointI, pointJ)
                 if pointI not in points_of_convex_hull:
                     points_of_convex_hull.append(pointI)
                 if pointJ not in points_of_convex_hull:
@@ -45,37 +45,37 @@ def get_points_of_convex_hull(points_in_plane):
     return points_of_convex_hull
 
 
-def prepare_line_for_plot(point1, point2):
+def prepareLineForPlot(point1, point2):
     """Takes in two points on the XY plane and uses the external library MatPlotLib to graph a green line between the two points"""
     
     plt.plot((point1[X_VAL], point2[X_VAL]), (point1[Y_VAL], point2[Y_VAL]), 'g-', lw=2)
 
     
-def line_is_border_of_hull(point1, point2, points_in_plane):
+def lineIsBorderOfHull(point1, point2, points_in_plane):
     """Takes in 2 points (tuples), constructs a line between them, and determines if the given line makes up one of the borders of the
        convex hull. If every other point lies on that line, this will return true."""
     
-    line_equation = construct_line_between_points(point1, point2)
+    line_equation = constructLineBetweenPoints(point1, point2)
     first_points_position_relative_to_line = None
     n = len(points_in_plane)
 
     for i in range(0,n):
         point = points_in_plane[i]
 
-        if get_points_position_relative_to_line(point, line_equation) == 0:
+        if getPointsPositionRelativeToLine(point, line_equation) == 0:
             continue
         else:
             if first_points_position_relative_to_line == None:
-                first_points_position_relative_to_line = get_points_position_relative_to_line(point, line_equation)
+                first_points_position_relative_to_line = getPointsPositionRelativeToLine(point, line_equation)
                 continue
 
-            if get_points_position_relative_to_line(point, line_equation) != first_points_position_relative_to_line:
+            if getPointsPositionRelativeToLine(point, line_equation) != first_points_position_relative_to_line:
                 return False
 
     return True
 
 
-def construct_line_between_points(point1,point2):
+def constructLineBetweenPoints(point1,point2):
     """Takes in 2 points (tuples) and returns a two variable function representing the line between those two points. Recognizes vertical
        lines and returns according function. Each equation set = 0 represents all points on said line."""
     
@@ -94,7 +94,7 @@ def construct_line_between_points(point1,point2):
         return lambda x, y: slope*(x - point1_x) + point1_y - y
 
 
-def get_points_position_relative_to_line(point, line_equation):
+def getPointsPositionRelativeToLine(point, line_equation):
     """Takes in a 2 variable function representing the equation of a line and any point on the plane (Tuple), then determines that points
        location in relation to the given line. To avoid floating point error we round each result to 9 digits. See preface
        instructions."""
@@ -109,7 +109,7 @@ def get_points_position_relative_to_line(point, line_equation):
         return 0
 
 
-def print_points_of_convex_hull(points_of_convex_hull):
+def printPointsOfConvexHull(points_of_convex_hull):
     """Displays results by printing each point (ordered pair) making up the convex hull."""
 
     print("Script Over. Below are the following points that make up the convex hull:")
@@ -118,7 +118,7 @@ def print_points_of_convex_hull(points_of_convex_hull):
         print("\t" + str(point))
 
 
-def prompt_for_valid_boolean(message):
+def promptForValidBoolean(message):
     """Prompts the user to enter a valid boolean (y) or (n) for a given message. Will not accept a faulty answer."""
     
     while(True):
@@ -132,7 +132,7 @@ def prompt_for_valid_boolean(message):
     return user_response
 
 
-def display_convex_hull(all_points_in_plane):
+def displayConvexHull(all_points_in_plane):
     """Displays convex hull scatter plot using external MatPlotLib library."""
     
     x_vals = []
@@ -153,12 +153,12 @@ def main():
     points_in_plane = [(-2,5), (1,1), (2,15), (30,30), (10,10), (15, 15), (30,1), (20,3), (25,10), (29, 2)]
     show_graphic = False
     
-    points_of_convex_hull = get_points_of_convex_hull(points_in_plane)
-    print_points_of_convex_hull(points_of_convex_hull)
+    points_of_convex_hull = getPointsOfConvexHull(points_in_plane)
+    printPointsOfConvexHull(points_of_convex_hull)
     if MATPLOTLIB_INSTALLED:
-        show_graphic = prompt_for_valid_boolean("Would you like to see a graphic of the convex hull?")
+        show_graphic = promptForValidBoolean("Would you like to see a graphic of the convex hull?")
     if show_graphic:
-        display_convex_hull(points_in_plane)
+        displayConvexHull(points_in_plane)
     
-
-main()
+if __name__ == '__main__':
+    main()
