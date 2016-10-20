@@ -99,11 +99,11 @@ def getPointsPositionRelativeToLine(point, line_equation):
        location in relation to the given line. To avoid floating point error we round each result to 9 digits. See preface
        instructions."""
 
-    f_at_x = round(line_equation(point[X_VAL], point[Y_VAL]), 10)
+    equation_at_point = round(line_equation(point[X_VAL], point[Y_VAL]), 10)
 
-    if f_at_x > 0:
+    if equation_at_point > 0:
         return 1
-    elif f_at_x < 0:
+    elif equation_at_point < 0:
         return -1
     else:
         return 0
