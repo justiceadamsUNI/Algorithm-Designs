@@ -3,12 +3,12 @@ from unittest import mock
 import random
 from mock import patch
 import convex_hull as convex_hull
-import mock_print_module
+
 
 class TestConvexHull(unittest.TestCase):
 
     def setUp(self):
-        print("\nTesting: ", self._testMethodName, end = " Status: -> ")     
+        print("Testing: ", self._testMethodName)
 
 
     @patch('matplotlib.pyplot.plot')
@@ -46,7 +46,7 @@ class TestConvexHull(unittest.TestCase):
         colinear_points = [vector_tail, vector_head, point_1_on_line, point_2_on_line]
 
         self.assertTrue(convex_hull.lineIsBorderOfHull(vector_tail, vector_head, colinear_points))
-        
+
 
     def test_constructLineBetweenPointsWithNonVerticalLine(self):
         point1 = (1,1)
@@ -76,7 +76,7 @@ class TestConvexHull(unittest.TestCase):
            test_y = test_point[1]
             
            self.assertEqual(line(test_x, test_y), vertical_line(test_x, test_y))
-           
+
 
     def test_getPointsPositionRelativeToLineWithHigherPoint(self):
         y_equals_x = lambda x, y: (x - 1) + 1 - y
@@ -121,9 +121,12 @@ class TestConvexHull(unittest.TestCase):
     @patch("convex_hull.print", autospec=True)
     def test_printPointsOfConvexHull(self,  mock_print):
         test_input = generateTestInput()
-
         convex_hull.printPointsOfConvexHull(test_input)
-        calls = [mock.call("\t" + str(test_input[0]))]
+
+        calls = []
+        for point in test_input:
+            calls.append(mock.call("\t" + str(point)))
+
         mock_print.assert_has_calls(calls, any_order=True)
         
         
