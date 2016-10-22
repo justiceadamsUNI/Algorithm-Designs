@@ -13,6 +13,8 @@
 ## all colinear, it will just return all points. Therefore it will let the line
 ## itslef be the convex hull.
 
+print = print
+
 MATPLOTLIB_INSTALLED = True
 try:
     import matplotlib.pyplot as plt
@@ -144,7 +146,6 @@ def displayConvexHull(all_points_in_plane):
 
     plt.scatter(x_vals,y_vals)
     plt.show()
-        
 
 def main():
     """Runs algorithm for the given set of points defined below. Prints the output and gives option to display graphic of convex hull."""

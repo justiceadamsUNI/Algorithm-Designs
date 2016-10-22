@@ -1,9 +1,9 @@
 import unittest
+from unittest import mock
 import random
 from mock import patch
 import convex_hull as convex_hull
-
-
+import mock_print_module
 
 class TestConvexHull(unittest.TestCase):
 
@@ -116,8 +116,15 @@ class TestConvexHull(unittest.TestCase):
         convex_hull.displayConvexHull(test_input)
         mock_scatter.assert_called_once_with(x_vals, y_vals)
         self.assertTrue(mock_show.called)
-            
         
+
+    @patch("convex_hull.print", autospec=True)
+    def test_printPointsOfConvexHull(self,  mock_print):
+        test_input = generateTestInput()
+
+        convex_hull.printPointsOfConvexHull(test_input)
+        calls = [mock.call("\t" + str(test_input[0]))]
+        mock_print.assert_has_calls(calls, any_order=True)
         
         
 
@@ -130,6 +137,9 @@ def generateTestInput(): ##Change name of method
         test_input.append((x,y))
 
     return test_input
+
+def testPrintStatement(string):
+    print(string)
         
 
 if __name__ == "__main__":
