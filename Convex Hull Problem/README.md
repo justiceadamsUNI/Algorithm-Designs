@@ -16,7 +16,7 @@ computed convex hull. You can install the MatPlotLib library quite easily with p
 In order to run the test script [test_convex_hull.py](test_convex_hull.py) you should install [Mock](https://docs.python.org/3/library/unittest.mock.html)
 so that the test can mock dependencies correctly. You can install the Mock library easily with pip.
 
-`pip install -U mock`
+`python -m pip install -U mock`
 
 ## Example Script Run
 Here's an gif of what it would look like to run the script with the following set of points: [(-2, 5), (1, -5), (2, 15), (30, 30), (10, 10), (15, 15), 
