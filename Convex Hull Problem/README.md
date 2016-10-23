@@ -24,4 +24,4 @@ Here's an gif of what it would look like to run the script with the following se
 
 Note that the gif is on a loop.
 
-![output](http://imgur.com/5H4HhgV)
+![output](http://i.imgur.com/5H4HhgV.gif)
