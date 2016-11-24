@@ -1,6 +1,6 @@
 ## Author:   Justice Adams
 ## Brute Force Robbers Knapsack Algorithm
-##
+
 ## Consider a burglar who needs to steal the most valuable subset of items from a given location.
 ## This algorithm uses a list defining item weights, a list containing item values, and a knapsack capacity.
 ## Assume that weights[n] corresponds to values[n] (so weight at index n of the weights list represents item n and
@@ -20,6 +20,7 @@ try:
     import matplotlib.pyplot as plt
 except ImportError:
     MATPLOTLIB_INSTALLED = False
+
 
 def fillKnapsack(weights, values, weight_capacity):
     """Takes in a list of item weights, a list of item values, and a knapsack capacity, then finds and returns
@@ -185,7 +186,7 @@ def displayKnapsackPieChart(knapsack, weights, values, capacity):
 
 def main():
     """Runs algorithm for the given data defined below. Prints the output and gives option to display a pie chart
-        if MatPlotLib installed."""
+       if MatPlotLib installed."""
 
     #Data values. Change Accordingly
     weights = [70, 73, 77, 80, 82, 87, 90, 94, 98, 106, 110, 113, 115, 118, 120]
@@ -208,13 +209,3 @@ def main():
 if __name__ == '__main__':
     ##This keeps the script from running upon importing. Has to be explicitly excecuted.
     main()
-
-
-
-
-    
-
-    
-    
-
-
