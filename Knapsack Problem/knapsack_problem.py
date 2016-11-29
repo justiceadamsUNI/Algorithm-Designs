@@ -151,8 +151,9 @@ def validateData(weights, values, weight_capacity):
 
 def displayResults(most_efficient_knapsack):
     """Displays the most efficient knapsack configuration to the user."""
-    
-    print("\n" + "Most valuable knapsack includes items - " + str(most_efficient_knapsack))
+
+    print("\n*Treating items as 0 indexed*")
+    print("Most valuable knapsack includes items - " + str(most_efficient_knapsack))
 
 
 def promptForValidBoolean(message):
@@ -192,7 +193,7 @@ def main():
     weights = [70, 73, 77, 80, 82, 87, 90, 94, 98, 106, 110, 113, 115, 118, 120]
     values = [135, 139, 149, 150, 156, 163, 173, 184, 192, 201, 210, 214, 221, 229, 240]
     capacity = 750
-
+    
     print("Running Script...")
     validateData(weights, values, capacity)
     best_knapsack = fillKnapsack(weights, values, capacity)
