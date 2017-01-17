@@ -8,7 +8,7 @@ Extra credit projects completed for CS 3530: Design and Analysis of Algorithms
  
  Also I've decided to include unit test, and example gifs when possible!
  
- Notes: The extra credit assignments involved implementing the BRUTE FORCE 
+ Notes: The extra credit assignments involved implementing the **BRUTE FORCE** 
  implementations of these algorithms. I fully understand that there are better implementations.
  For example, a dynamic programming approach to the knapsack problem is much better
  than the brute force solution you will find here. That being said, that wasn't the assignment :).
