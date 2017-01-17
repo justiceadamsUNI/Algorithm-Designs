@@ -28,7 +28,7 @@ def fillKnapsack(weights, values, weight_capacity):
        highest possible value, the lowest weighing combination is returned."""
 
     number_of_items = len(weights)
-    
+
     power_set = computePowerset(range(number_of_items))
 
     valid_knapsacks = getAllValidKnapsackCombinations(power_set, weights, weight_capacity)
@@ -53,20 +53,20 @@ def computePowerset(items):
 
     return power_set
 
-    
+
 def powerset(iterable):
     """As defined in Python Itertools documentation : https://docs.python.org/3/library/itertools.html#recipes
        powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"""
-    
+
     s = list(iterable)
-    return itertools.chain.from_iterable(itertools.combinations(s, r) for r in range(len(s)+1))
+    return itertools.chain.from_iterable(itertools.combinations(s, r) for r in range(len(s) + 1))
 
 
 def getAllValidKnapsackCombinations(possible_combinations, weights, weight_capacity):
     """Takes in all possible item combinations and a list of each items corresponding weights then returns a
        list containing only those combinations which are actually possible (they don't exceed the weight
        limit)."""
-      
+
     valid_knapsacks = []
     for knapsack_combination in possible_combinations:
         if computeKnapsackWeight(knapsack_combination, weights) <= weight_capacity:
@@ -78,7 +78,7 @@ def getAllValidKnapsackCombinations(possible_combinations, weights, weight_capac
 def computeKnapsackWeight(knapsack, weights):
     """Takes in a knapsack combination and a list of item weights. Returns the weight of the given knapsack
        combination."""
-    
+
     total_weight = 0
     for item in knapsack:
         total_weight += weights[item]
@@ -88,10 +88,10 @@ def computeKnapsackWeight(knapsack, weights):
 def findMostValuableKnapsackCombinations(valid_knapsacks, values):
     """Takes in a list of knapsack combinations and a list of item values then finds the most valuable
        combination (or combinations) and returns them in the form of a list."""
-    
+
     max_value_combinations = []
     highest_value_knapsack = 0
-    
+
     for knapsack_combination in valid_knapsacks:
         value_of_knapsack = computeKnapsackValue(knapsack_combination, values)
 
@@ -107,7 +107,7 @@ def findMostValuableKnapsackCombinations(valid_knapsacks, values):
 def computeKnapsackValue(knapsack, values):
     """Takes in a knapsack combination and a list of corresponding values. Returns the value of the given
        knapsack combination."""
-    
+
     total_value = 0
     for item in knapsack:
         total_value += values[item]
@@ -124,27 +124,27 @@ def findLightestKnapsackCombination(knapsacks, weights):
     for knapsack_combination in knapsacks:
         knapsack_weight = computeKnapsackWeight(knapsack_combination, weights)
         if lightest_knapsack_weight == None or knapsack_weight < lightest_knapsack_weight:
-           lightest_knapsack_weight = knapsack_weight
-           lightest_knapsack = knapsack_combination
+            lightest_knapsack_weight = knapsack_weight
+            lightest_knapsack = knapsack_combination
 
     return lightest_knapsack
 
 
 def validateData(weights, values, weight_capacity):
     """Validates input data for the knapsack algorithm."""
-    
-    if not(len(weights) == len(values)):
+
+    if not (len(weights) == len(values)):
         raise DataValidationError("Data Error: There is an unequal number of weights and values.")
 
     for weight in weights:
         if weight <= 0:
-          raise DataValidationError("Data Error: All item weights must be non-negative numbers.")
+            raise DataValidationError("Data Error: All item weights must be non-negative numbers.")
 
     for value in values:
         if value < 0:
-          raise DataValidationError("Data Error: All item values must be greater than or equal to 0.")
+            raise DataValidationError("Data Error: All item values must be greater than or equal to 0.")
 
-    if weight_capacity <=0:
+    if weight_capacity <= 0:
         raise DataValidationError("Data Error: The weight capacity must be greater than or equal to 0.")
 
 
@@ -157,7 +157,7 @@ def displayResults(most_efficient_knapsack):
 
 def promptForValidBoolean(message):
     """Prompts the user to enter a valid boolean (y) or (n) for a given message. Will not accept a faulty answer."""
-    
+
     while True:
         user_response = input("\n" + message + " (y)es or (n)o: ")
         if user_response.lower().strip() in ("y", "n"):
@@ -171,16 +171,15 @@ def promptForValidBoolean(message):
 
 def displayKnapsackPieChart(knapsack, weights, values, capacity):
     """Displays pie chart of knapsack item weight distrobutions using external MatPlotLib library."""
-    
+
     sizes = []
     labels = []
     for item in knapsack:
-        sizes.append(weights[item]/capacity)
+        sizes.append(weights[item] / capacity)
         labels.append("Item " + str(item) + ": value = $" + str(values[item]))
-    
-    
+
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
-    plt.title('Knapsack Pie Chart (percentages represent weight distribution)', bbox={'facecolor':'0.8', 'pad':5})
+    plt.title('Knapsack Pie Chart (percentages represent weight distribution)', bbox={'facecolor': '0.8', 'pad': 5})
     plt.show()
 
 
@@ -188,11 +187,11 @@ def main():
     """Runs algorithm for the given data defined below. Prints the output and gives option to display a pie chart
        if MatPlotLib installed."""
 
-    #Data values. Change Accordingly
+    # Data values. Change Accordingly
     weights = [70, 73, 77, 80, 82, 87, 90, 94, 98, 106, 110, 113, 115, 118, 120]
     values = [135, 139, 149, 150, 156, 163, 173, 184, 192, 201, 210, 214, 221, 229, 240]
     capacity = 750
-    
+
     print("Running Script...")
     validateData(weights, values, capacity)
     best_knapsack = fillKnapsack(weights, values, capacity)
@@ -205,6 +204,7 @@ def main():
 
     if show_graphic:
         displayKnapsackPieChart(best_knapsack, weights, values, capacity)
+
 
 if __name__ == '__main__':
     ##This keeps the script from running upon importing. Has to be explicitly excecuted.
