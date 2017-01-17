@@ -96,8 +96,7 @@ def findMostValuableKnapsackCombinations(valid_knapsacks, values):
         value_of_knapsack = computeKnapsackValue(knapsack_combination, values)
 
         if value_of_knapsack > highest_value_knapsack:
-            max_value_combinations = []
-            max_value_combinations.append(knapsack_combination)
+            max_value_combinations = [knapsack_combination]
             highest_value_knapsack = value_of_knapsack
         elif value_of_knapsack == highest_value_knapsack:
             max_value_combinations.append(knapsack_combination)
@@ -124,7 +123,7 @@ def findLightestKnapsackCombination(knapsacks, weights):
     lightest_knapsack_weight = None
     for knapsack_combination in knapsacks:
         knapsack_weight = computeKnapsackWeight(knapsack_combination, weights)
-        if knapsack_weight < lightest_knapsack_weight or lightest_knapsack_weight == None:
+        if lightest_knapsack_weight == None or knapsack_weight < lightest_knapsack_weight:
            lightest_knapsack_weight = knapsack_weight
            lightest_knapsack = knapsack_combination
 
@@ -135,18 +134,18 @@ def validateData(weights, values, weight_capacity):
     """Validates input data for the knapsack algorithm."""
     
     if not(len(weights) == len(values)):
-        raise RuntimeWarning("Data Error: There is an unequal number of weights and values.")
+        raise DataValidationError("Data Error: There is an unequal number of weights and values.")
 
     for weight in weights:
         if weight <= 0:
-          raise RuntimeWarning("Data Error: All item weights must be nonnegative numbers.")
+          raise DataValidationError("Data Error: All item weights must be non-negative numbers.")
 
     for value in values:
         if value < 0:
-          raise RuntimeWarning("Data Error: All item values must be greater than or equal to 0.")
+          raise DataValidationError("Data Error: All item values must be greater than or equal to 0.")
 
     if weight_capacity <=0:
-        raise RuntimeWarning("Data Error: The weight capacity must be greater than or equal to 0.")
+        raise DataValidationError("Data Error: The weight capacity must be greater than or equal to 0.")
 
 
 def displayResults(most_efficient_knapsack):
@@ -181,7 +180,7 @@ def displayKnapsackPieChart(knapsack, weights, values, capacity):
     
     
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
-    plt.title('Knapsack Pie Chart (percentages represent weight distrobution)', bbox={'facecolor':'0.8', 'pad':5})
+    plt.title('Knapsack Pie Chart (percentages represent weight distribution)', bbox={'facecolor':'0.8', 'pad':5})
     plt.show()
 
 
@@ -210,3 +209,14 @@ def main():
 if __name__ == '__main__':
     ##This keeps the script from running upon importing. Has to be explicitly excecuted.
     main()
+
+
+class DataValidationError(RuntimeError):
+    message = None
+
+    def __init__(self, message):
+        self.message = message
+        super(RuntimeError, self).__init__(self, message)
+
+    def getMessage(self):
+        return self.message
